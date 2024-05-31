@@ -1,6 +1,0 @@
-{
-  "secret_key": "SecretKey(#5506cbd5c005f5e7)",
-  "public_key": "PublicKey(70a70380111a14c998f23d021e46875f30fd1d8b75c887169673789eb487d355cfe536872443c5813407daac8e66a58d7413ca82a5c632033264a02a5cd16d9f)",
-  "public_address": "0xdad9559f89acf74f39c07b907bd7be95c67cc8e3",
-  "recovery_phrase": "somephrase"
-}
