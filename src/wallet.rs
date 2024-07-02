@@ -4,7 +4,6 @@ use secp256k1::rand::rngs::OsRng;
 use secp256k1::Secp256k1;
 use secp256k1::{PublicKey, SecretKey};
 use serde::{Deserialize, Serialize};
-use serde_json::from_str;
 use std::io::BufWriter;
 use std::str::FromStr;
 use std::{fs::OpenOptions, io::BufReader};
@@ -98,9 +97,25 @@ impl Wallet {
             .build();
     }
 
-    pub fn get_public_address(self) -> Result<H160> {
-        let public_address = from_str(&self.public_address)?;
-        Ok(public_address)
+    // pub fn get_public_address(self) -> Result<H160> {
+    //     let public_address = from_str(&self.public_address)?;
+    //     Ok(public_address)
+    // }
+
+    // pub fn get_public_key(&self) -> Result<PublicKey> {
+    //     let public_key = PublicKey::from_str(&self.public_key)?;
+    //     Ok(public_key)
+    // }
+
+    pub fn get_secret_key(&self) -> Result<SecretKey> {
+        let secret_key = SecretKey::from_str(&self.secret_key)?;
+        Ok(secret_key)
+    }
+
+    pub async fn get_balance(&self, connection: &Web3<WebSocket>) -> Result<U256> {
+        let address = Address::from_str(&self.public_address)?;
+        let balance = connection.eth().balance(address, None).await?;
+        Ok(balance)
     }
 
     pub fn store_wallet(&self, file_path: &str) {
@@ -111,20 +126,6 @@ impl Wallet {
             .unwrap();
         let buf_writer = BufWriter::new(file);
         serde_json::to_writer_pretty(buf_writer, self).unwrap();
-    }
-
-    pub fn get_public_key(&self) -> Result<PublicKey> {
-        let public_key = PublicKey::from_str(&self.public_key)?;
-        Ok(public_key)
-    }
-    pub fn get_secret_key(&self) -> Result<SecretKey> {
-        let secret_key = SecretKey::from_str(&self.secret_key)?;
-        Ok(secret_key)
-    }
-    pub async fn get_balance(&self, connection: &Web3<WebSocket>) -> Result<U256> {
-        let address = Address::from_str(&self.public_address)?;
-        let balance = connection.eth().balance(address, None).await?;
-        Ok(balance)
     }
 }
 

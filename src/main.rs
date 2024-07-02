@@ -4,7 +4,7 @@ mod wallet;
 use anyhow::Result;
 use dotenv::dotenv;
 use std::str::FromStr;
-use web3::types::{Address, H160, U256};
+use web3::types::{Address, U256};
 
 use std::env;
 use wallet::{load_wallet, Wallet};
