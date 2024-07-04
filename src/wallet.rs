@@ -80,8 +80,8 @@ impl WalletBuilder {
     }
     fn build(&mut self) -> Result<Wallet> {
         Ok(Wallet {
-            secret_key: format!("{:?}", self.secret_key.unwrap()),
-            public_key: format!("{:?}", self.public_key.unwrap()),
+            secret_key: format!("{}", self.secret_key.unwrap().display_secret()),
+            public_key: format!("{}", self.public_key.unwrap()),
             public_address: format!("{:?}", self.public_address.unwrap()),
             recovery_phrase: self.recovery_phrase.clone(),
         })
@@ -97,18 +97,8 @@ impl Wallet {
             .build();
     }
 
-    // pub fn get_public_address(self) -> Result<H160> {
-    //     let public_address = from_str(&self.public_address)?;
-    //     Ok(public_address)
-    // }
-
-    // pub fn get_public_key(&self) -> Result<PublicKey> {
-    //     let public_key = PublicKey::from_str(&self.public_key)?;
-    //     Ok(public_key)
-    // }
-
     pub fn get_secret_key(&self) -> Result<SecretKey> {
-        let secret_key = SecretKey::from_str(&self.secret_key)?;
+        let secret_key: SecretKey = SecretKey::from_str(&self.secret_key)?;
         Ok(secret_key)
     }
 

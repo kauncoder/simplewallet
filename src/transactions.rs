@@ -25,7 +25,6 @@ pub async fn sign_and_send(
         .accounts()
         .sign_transaction(transaction, secret_key)
         .await?;
-    println!("was signed");
     let transaction_result = web3
         .eth()
         .send_raw_transaction(signed.raw_transaction)
